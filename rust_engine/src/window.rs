@@ -8,25 +8,29 @@ pub struct GLFWwindow {
     _marker: PhantomData<(*mut usize, PhantomPinned)>,
 }
 
-pub fn create_pvp_window(title: String, width: u32, height: u32) {
-    let c_str = CString::new(title).expect("CString::new failed!");
-    let title_as_c_ptr: *const c_char = c_str.as_ptr();
-
-    unsafe { create_game_window(title_as_c_ptr, width, height) }
-}
-
 unsafe extern "C" {
-    fn create_game_window(title: *const c_char, width: u32, height: u32);
+    fn create_game_window(
+        title: *const c_char,
+        width: std::os::raw::c_uint,
+        height: std::os::raw::c_uint,
+    );
 
     fn update_game_window();
 
     fn clear_screen();
 
-    fn window_should_close() -> u8;
+    fn window_should_close() -> std::os::raw::c_uchar;
 
-    fn get_key(window: *const GLFWwindow, key: i32) -> i32;
+    fn get_key(window: *const GLFWwindow, key: std::os::raw::c_int) -> std::os::raw::c_int;
 
     fn get_window() -> *const GLFWwindow;
+}
+
+pub fn create_pvp_window(title: String, width: u32, height: u32) {
+    let c_str = CString::new(title).expect("CString::new failed!");
+    let title_as_c_ptr: *const c_char = c_str.as_ptr();
+
+    unsafe { create_game_window(title_as_c_ptr, width, height) }
 }
 
 pub fn update_pvp_window() {
