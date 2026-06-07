@@ -193,31 +193,23 @@ fn test_key_presses() {
 
 #[test]
 fn test_sprite_position_update() {
-    let duration = std::time::Duration::from_millis(50);
     let title = String::from("Test Sprite Position Update");
-    let sprite = rust_engine::sprite::create_pvp_sprite(0.0, 0.0, 80, 80, 255, 255, 255);
     let mut counter_sprite_position = 1;
 
-    rust_engine::window::create_pvp_window(title, 800, 600);
-
-    loop {
-        rust_engine::sprite::render_pvp_sprite(sprite);
-        rust_engine::sprite::update_pvp_sprite_position(
+    rust_engine::start_window_and_game_loop!(
+        title,
+        800,
+        600,
+        let sprite = rust_engine::spawn_sprite!(0.0, 0.0, 80, 80, 255, 255, 255);
+        rust_engine::move_sprite!(
+            clear,
             sprite,
             10.0 * counter_sprite_position as f32,
-            10.0 * counter_sprite_position as f32,
+            10.0 * counter_sprite_position as f32
         );
         rust_engine::window::update_pvp_window();
-
-        if counter_sprite_position > 70 && rust_engine::window::close_pvp_window() == 1 {
-            break;
-        }
-
-        std::thread::sleep(duration);
-        rust_engine::window::clear_pvp_window_screen();
         counter_sprite_position += 1;
-    }
+    );
 
-    assert_ne!(sprite, std::ptr::null_mut());
     assert!(counter_sprite_position > 70);
 }

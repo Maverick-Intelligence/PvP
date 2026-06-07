@@ -3,10 +3,11 @@ pub mod window;
 
 #[macro_export]
 macro_rules! spawn_sprite {
-    ($x:expr, $y:expr, $w:expr, $h:expr, $r:expr, $g:expr, $b:expr) => {
+    ($x:expr, $y:expr, $w:expr, $h:expr, $r:expr, $g:expr, $b:expr) => {{
         let tmp_sprite = $crate::sprite::create_pvp_sprite($x, $y, $w, $h, $r, $g, $b);
         $crate::sprite::render_pvp_sprite(tmp_sprite);
-    };
+        tmp_sprite
+    }};
 }
 
 #[macro_export]
