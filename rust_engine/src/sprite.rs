@@ -42,3 +42,7 @@ impl Sprite {
         self.color = [r, g, b];
     }
 }
+
+pub fn pvp_sprite_ref<'a>(sprite: *const Sprite) -> &'a Sprite {
+    unsafe { &*sprite }
+}
