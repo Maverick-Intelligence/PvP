@@ -74,11 +74,19 @@ fn test_key_presses() {
     let mut is_key_left_pressed = false;
     let mut is_key_down_pressed = false;
     let mut is_key_up_pressed = false;
+    let mut is_key_a_pressed = false;
+    let mut is_key_w_pressed = false;
+    let mut is_key_d_pressed = false;
+    let mut is_key_s_pressed = false;
     let sprite_red = rust_engine::sprite::create_pvp_sprite(0.0, 0.0, 80, 80, 255, 0, 0);
     let sprite_green = rust_engine::sprite::create_pvp_sprite(0.0, 0.0, 80, 80, 0, 255, 0);
     let sprite_blue = rust_engine::sprite::create_pvp_sprite(0.0, 0.0, 80, 80, 0, 0, 255);
     let sprite_yellow = rust_engine::sprite::create_pvp_sprite(0.0, 0.0, 80, 80, 255, 255, 0);
     let sprite_violet = rust_engine::sprite::create_pvp_sprite(0.0, 0.0, 80, 80, 127, 0, 255);
+    let sprite_pink = rust_engine::sprite::create_pvp_sprite(0.0, 0.0, 80, 80, 255, 0, 127);
+    let sprite_cyan = rust_engine::sprite::create_pvp_sprite(0.0, 0.0, 80, 80, 0, 255, 255);
+    let sprite_brown = rust_engine::sprite::create_pvp_sprite(0.0, 0.0, 80, 80, 150, 75, 0);
+    let sprite_gray = rust_engine::sprite::create_pvp_sprite(0.0, 0.0, 80, 80, 169, 169, 169);
 
     rust_engine::window::create_pvp_window(title, 800, 600);
 
@@ -124,7 +132,40 @@ fn test_key_presses() {
             is_key_down_pressed = true;
             rust_engine::sprite::render_pvp_sprite(sprite_violet);
             rust_engine::window::update_pvp_window();
+        } else if rust_engine::window::get_pvp_key(
+            rust_engine::window::get_pvp_window(),
+            rust_engine::window::GLFW_KEY_A,
+        ) == rust_engine::window::GLFW_PRESS
+        {
+            is_key_a_pressed = true;
+            rust_engine::sprite::render_pvp_sprite(sprite_pink);
+            rust_engine::window::update_pvp_window();
+        } else if rust_engine::window::get_pvp_key(
+            rust_engine::window::get_pvp_window(),
+            rust_engine::window::GLFW_KEY_W,
+        ) == rust_engine::window::GLFW_PRESS
+        {
+            is_key_w_pressed = true;
+            rust_engine::sprite::render_pvp_sprite(sprite_cyan);
+            rust_engine::window::update_pvp_window();
+        } else if rust_engine::window::get_pvp_key(
+            rust_engine::window::get_pvp_window(),
+            rust_engine::window::GLFW_KEY_D,
+        ) == rust_engine::window::GLFW_PRESS
+        {
+            is_key_d_pressed = true;
+            rust_engine::sprite::render_pvp_sprite(sprite_brown);
+            rust_engine::window::update_pvp_window();
+        } else if rust_engine::window::get_pvp_key(
+            rust_engine::window::get_pvp_window(),
+            rust_engine::window::GLFW_KEY_S,
+        ) == rust_engine::window::GLFW_PRESS
+        {
+            is_key_s_pressed = true;
+            rust_engine::sprite::render_pvp_sprite(sprite_gray);
+            rust_engine::window::update_pvp_window();
         }
+
         if rust_engine::window::close_pvp_window() == 1 {
             break;
         }
@@ -137,6 +178,10 @@ fn test_key_presses() {
     assert_eq!(is_key_left_pressed, true);
     assert_eq!(is_key_down_pressed, true);
     assert_eq!(is_key_up_pressed, true);
+    assert_eq!(is_key_a_pressed, true);
+    assert_eq!(is_key_w_pressed, true);
+    assert_eq!(is_key_d_pressed, true);
+    assert_eq!(is_key_s_pressed, true);
 }
 
 #[test]

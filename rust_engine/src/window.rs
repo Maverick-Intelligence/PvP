@@ -8,6 +8,10 @@ pub const GLFW_KEY_RIGHT: c_int = 262;
 pub const GLFW_KEY_LEFT: c_int = 263;
 pub const GLFW_KEY_DOWN: c_int = 264;
 pub const GLFW_KEY_UP: c_int = 265;
+pub const GLFW_KEY_A: c_int = 65;
+pub const GLFW_KEY_W: c_int = 87;
+pub const GLFW_KEY_D: c_int = 68;
+pub const GLFW_KEY_S: c_int = 83;
 
 #[repr(C)]
 pub struct GLFWwindow {

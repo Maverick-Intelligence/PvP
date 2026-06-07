@@ -1,6 +1,6 @@
 # **PvP**
 
-**(Agent) Ping Versus (Agent) Pong - The classical pingpong game, but for your AI Agent (LLM + tool calling).**
+**Ping Versus Pong - The classical ping pong game in Rust and C.**
 
 ---
 
