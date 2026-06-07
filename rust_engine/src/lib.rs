@@ -3,7 +3,7 @@ pub mod window;
 
 #[macro_export]
 macro_rules! spawn_sprite {
-    ($x:literal, $y:literal, $w:literal, $h:literal, $r:literal, $g:literal, $b:literal) => {
+    ($x:expr, $y:expr, $w:expr, $h:expr, $r:expr, $g:expr, $b:expr) => {
         let tmp_sprite = $crate::sprite::create_pvp_sprite($x, $y, $w, $h, $r, $g, $b);
         $crate::sprite::render_pvp_sprite(tmp_sprite);
     };
@@ -11,18 +11,15 @@ macro_rules! spawn_sprite {
 
 #[macro_export]
 macro_rules! move_sprite {
-    (1, ($sprite:ident, $x:ident, $y: ident)) => {
+    (clear, $sprite:expr, $x:expr, $y:expr) => {{
         $crate::window::clear_pvp_window_screen();
-        $crate::sprite::update_pvp_sprite_position($sprite, $x, $x);
+        $crate::sprite::update_pvp_sprite_position($sprite, $x, $y);
         $crate::sprite::render_pvp_sprite($sprite);
-        $crate::window::update_pvp_window();
-    };
-    (2, ($sprite:ident, $x:ident, $y: ident)) => {
-        $crate::sprite::update_pvp_sprite_position($sprite, $x, $x);
+    }};
+    (no_clear, $sprite:expr, $x:expr, $y:expr) => {{
+        $crate::sprite::update_pvp_sprite_position($sprite, $x, $y);
         $crate::sprite::render_pvp_sprite($sprite);
-        $crate::window::update_pvp_window();
-        $crate::window::clear_pvp_window_screen();
-    };
+    }};
 }
 
 #[macro_export]
@@ -50,31 +47,33 @@ macro_rules! on_key_press {
 
 #[macro_export]
 macro_rules! change_sprite_color {
-    ($sprite:ident, $r:ident, $g:ident, $b:ident) => {
-        let tmp_sprite = spawn_sprite!(
-            $sprite.x.clone(),
-            $sprite.y.clone(),
-            $sprite.width.clone(),
-            $sprite.height.clone(),
+    ($sprite:expr, $r:expr, $g:expr, $b:expr) => {{
+        let tmp_sprite = $crate::sprite::pvp_sprite_ref($sprite);
+        $crate::spawn_sprite!(
+            tmp_sprite.x,
+            tmp_sprite.y,
+            tmp_sprite.width,
+            tmp_sprite.height,
             $r,
             $g,
             $b
         );
-        tmp_sprite;
-    };
+    }};
 }
 
 #[macro_export]
 macro_rules! start_window_and_game_loop {
-    ($title:expr, $w:expr, $h:expr, $action:expr) => {{
+    ($title:expr, $w:expr, $h:expr, $($action:tt)*) => {{
         $crate::window::create_pvp_window($title, $w, $h);
 
         loop {
-            $action;
+            $($action)*
+
             if $crate::window::close_pvp_window() == 1 {
                 break;
             }
             $crate::tick!();
+            $crate::window::clear_pvp_window_screen();
         }
     }};
 }
