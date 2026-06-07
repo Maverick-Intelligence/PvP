@@ -8,3 +8,11 @@ cc = "1.2.63"
 pkg-config = "0.3"
 
 [dependencies]
+
+[[test]]
+name = "integration_tests"
+path = "tests/integration_test.rs"
+
+[[test]]
+name = "unit_tests"
+path = "tests/unit_test.rs"

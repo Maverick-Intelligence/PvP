@@ -8,12 +8,23 @@ pub struct Sprite {
 }
 
 unsafe extern "C" {
-    fn create_sprite(x: f32, y: f32, width: u32, height: u32, r: u8, g: u8, b: u8)
-    -> *const Sprite;
+    fn create_sprite(
+        x: std::os::raw::c_float,
+        y: std::os::raw::c_float,
+        width: std::os::raw::c_uint,
+        height: std::os::raw::c_uint,
+        r: u8,
+        g: u8,
+        b: u8,
+    ) -> *const Sprite;
 
     fn render_sprite(sprite: *const Sprite);
 
-    fn update_sprite_position(sprite: *const Sprite, x: f32, y: f32);
+    fn update_sprite_position(
+        sprite: *const Sprite,
+        x: std::os::raw::c_float,
+        y: std::os::raw::c_float,
+    );
 }
 
 pub fn create_pvp_sprite(
