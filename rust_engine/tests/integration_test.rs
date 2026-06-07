@@ -5,7 +5,6 @@ fn test_simple_game_loop() {
     let title = String::from("Test Simple Game Loop");
 
     rust_engine::start_window_and_game_loop!(title, 800, 600, rust_engine::tick!(10););
-
     assert_eq!(10, 10);
 }
 
