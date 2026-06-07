@@ -1,6 +1,13 @@
 use std::ffi::CString;
 use std::marker::{PhantomData, PhantomPinned};
-use std::os::raw::c_char;
+use std::os::raw::{c_char, c_int};
+
+pub const GLFW_PRESS: c_int = 1;
+pub const GLFW_KEY_SPACE: c_int = 32;
+pub const GLFW_KEY_RIGHT: c_int = 262;
+pub const GLFW_KEY_LEFT: c_int = 263;
+pub const GLFW_KEY_DOWN: c_int = 264;
+pub const GLFW_KEY_UP: c_int = 265;
 
 #[repr(C)]
 pub struct GLFWwindow {
