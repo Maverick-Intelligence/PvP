@@ -46,3 +46,7 @@ pub fn render_pvp_sprite(sprite: *const Sprite) {
 pub fn update_pvp_sprite_position(sprite: *const Sprite, x: f32, y: f32) {
     unsafe { update_sprite_position(sprite, x, y) }
 }
+
+pub fn pvp_sprite_ref<'a>(sprite: *const Sprite) -> &'a Sprite {
+    unsafe { &*sprite }
+}
