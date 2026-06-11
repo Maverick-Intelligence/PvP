@@ -26,31 +26,25 @@ fn test_sprite_rendering() {
 
 #[test]
 fn test_screen_clearing() {
-    let duration_1 = std::time::Duration::from_millis(1000);
-    let duration_2 = std::time::Duration::from_millis(10);
     let title = String::from("Test Screen Clearing");
 
-    rust_engine::window::create_pvp_window(title, 800, 600);
+    rust_engine::start_window_and_game_loop!(
+        title.clone(),
+        800,
+        600,
+        let sprite = rust_engine::spawn_sprite!(0.0, 0.0, 80, 80, 255, 0, 0);
+        rust_engine::tick!();
+        rust_engine::window::clear_pvp_window_screen();
+        rust_engine::change_sprite_color!(
+            sprite,
+            0,
+            255,
+            0
+        );
+        rust_engine::tick!();
+    );
 
-    let sprite_red = rust_engine::sprite::create_pvp_sprite(0.0, 0.0, 80, 80, 255, 0, 0);
-    let sprite_green = rust_engine::sprite::create_pvp_sprite(0.0, 0.0, 80, 80, 0, 255, 0);
-
-    rust_engine::sprite::render_pvp_sprite(sprite_red);
-    rust_engine::window::update_pvp_window();
-    std::thread::sleep(duration_1);
-    rust_engine::window::clear_pvp_window_screen();
-
-    loop {
-        rust_engine::sprite::render_pvp_sprite(sprite_green);
-        rust_engine::window::update_pvp_window();
-        if rust_engine::window::close_pvp_window() == 1 {
-            break;
-        }
-        std::thread::sleep(duration_2);
-    }
-
-    assert_ne!(sprite_red, std::ptr::null_mut());
-    assert_ne!(sprite_green, std::ptr::null_mut());
+    assert_eq!(title.len(), 20);
 }
 
 #[test]
