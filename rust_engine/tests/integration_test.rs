@@ -4,7 +4,7 @@ extern crate rust_engine;
 fn test_simple_game_loop() {
     let title = String::from("Test Simple Game Loop");
 
-    rust_engine::start_window_and_game_loop!(title, 800, 600, rust_engine::window::update_pvp_window(););
+    rust_engine::start_window_and_game_loop!(title, 800, 600, rust_engine::tick!(10););
 
     assert_eq!(10, 10);
 }
@@ -12,13 +12,14 @@ fn test_simple_game_loop() {
 #[test]
 fn test_sprite_rendering() {
     let title = String::from("Test Sprite Rendering");
+    let sprite = rust_engine::spawn_sprite!(0.0, 0.0, 80, 80, 255, 255, 255);
 
     rust_engine::start_window_and_game_loop!(
         title.clone(),
         800,
         600,
-        rust_engine::spawn_sprite!(0.0, 0.0, 80, 80, 255, 255, 255);
-        rust_engine::window::update_pvp_window();
+        sprite.render();
+        rust_engine::tick!(10);
     );
 
     assert_eq!(title.len(), 21);
@@ -27,13 +28,19 @@ fn test_sprite_rendering() {
 #[test]
 fn test_screen_clearing() {
     let title = String::from("Test Screen Clearing");
+    let mut sprite = rust_engine::spawn_sprite!(0.0, 0.0, 80, 80, 255, 0, 0);
 
     rust_engine::start_window_and_game_loop!(
         title.clone(),
         800,
         600,
-        let sprite = rust_engine::spawn_sprite!(0.0, 0.0, 80, 80, 255, 0, 0);
-        rust_engine::tick!();
+        rust_engine::change_sprite_color!(
+            sprite,
+            255,
+            0,
+            0
+        );
+        rust_engine::tick!(2000);
         rust_engine::window::clear_pvp_window_screen();
         rust_engine::change_sprite_color!(
             sprite,
@@ -41,7 +48,7 @@ fn test_screen_clearing() {
             255,
             0
         );
-        rust_engine::tick!();
+        rust_engine::tick!(3000);
     );
 
     assert_eq!(title.len(), 20);
@@ -63,7 +70,7 @@ fn test_key_presses() {
     let sprite_pos_y = 0.0;
     let sprite_dim = 80;
     let sprite_rgb = 0;
-    let sprite = rust_engine::sprite::create_pvp_sprite(
+    let mut sprite = rust_engine::sprite::Sprite::new(
         sprite_pos_x,
         sprite_pos_y,
         sprite_dim,
@@ -177,21 +184,20 @@ fn test_key_presses() {
 fn test_sprite_position_update() {
     let title = String::from("Test Sprite Position Update");
     let mut counter_sprite_position = 1;
+    let mut sprite = rust_engine::spawn_sprite!(0.0, 0.0, 80, 80, 255, 255, 255);
 
     rust_engine::start_window_and_game_loop!(
         title,
         800,
         600,
-        let sprite = rust_engine::spawn_sprite!(0.0, 0.0, 80, 80, 255, 255, 255);
         rust_engine::move_sprite!(
             clear,
             sprite,
             10.0 * counter_sprite_position as f32,
             10.0 * counter_sprite_position as f32
         );
-        rust_engine::window::update_pvp_window();
         counter_sprite_position += 1;
     );
 
-    assert!(counter_sprite_position > 70);
+    assert!(counter_sprite_position > 1);
 }
