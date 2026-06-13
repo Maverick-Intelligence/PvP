@@ -1,52 +1,44 @@
+use std::os::raw::{c_float, c_int, c_uint};
+
 #[repr(C)]
 pub struct Sprite {
     pub width: u32,
     pub height: u32,
-    pub color: [u8; 3],
+    pub color: [i32; 3],
     pub x: f32,
     pub y: f32,
 }
 
 unsafe extern "C" {
     fn create_sprite(
-        x: std::os::raw::c_float,
-        y: std::os::raw::c_float,
-        width: std::os::raw::c_uint,
-        height: std::os::raw::c_uint,
-        r: u8,
-        g: u8,
-        b: u8,
+        x: c_float,
+        y: c_float,
+        width: c_uint,
+        height: c_uint,
+        r: c_int,
+        g: c_int,
+        b: c_int,
     ) -> *const Sprite;
 
     fn render_sprite(sprite: *const Sprite);
 
-    fn update_sprite_position(
-        sprite: *const Sprite,
-        x: std::os::raw::c_float,
-        y: std::os::raw::c_float,
-    );
+    fn update_sprite_position(sprite: *mut Sprite, x: c_float, y: c_float);
 }
 
-pub fn create_pvp_sprite(
-    x: f32,
-    y: f32,
-    width: u32,
-    height: u32,
-    r: u8,
-    g: u8,
-    b: u8,
-) -> *const Sprite {
-    unsafe { create_sprite(x, y, width, height, r, g, b) }
-}
+impl Sprite {
+    pub fn new(x: f32, y: f32, width: u32, height: u32, r: i32, g: i32, b: i32) -> Self {
+        unsafe { std::ptr::read(create_sprite(x, y, width, height, r, g, b)) }
+    }
 
-pub fn render_pvp_sprite(sprite: *const Sprite) {
-    unsafe { render_sprite(sprite) }
-}
+    pub fn render(&self) {
+        unsafe { render_sprite(self) };
+    }
 
-pub fn update_pvp_sprite_position(sprite: *const Sprite, x: f32, y: f32) {
-    unsafe { update_sprite_position(sprite, x, y) }
-}
+    pub fn update_position(&mut self, x: f32, y: f32) {
+        unsafe { update_sprite_position(self, x, y) };
+    }
 
-pub fn pvp_sprite_ref<'a>(sprite: *const Sprite) -> &'a Sprite {
-    unsafe { &*sprite }
+    pub fn set_color(&mut self, r: i32, g: i32, b: i32) {
+        self.color = [r, g, b];
+    }
 }
