@@ -7,16 +7,26 @@
 | Source | Description |
 | -- | -- |
 | c_engine | OpenGL wrapper with C code |
-| pvp_game | Rust-based ping pong game for LLM using `c_engine` and `rust_engine` |
+| pvp_game | [FUTURE WORK] Rust-based ping pong game for LLM using `c_engine` and `rust_engine` |
 | rust_engine | Rust code to power `pvp_game` with `c_engine` dependency |
+| rust_test_game | Rust code to apply `rust_engine` for Udacity submission |
 
 ## **1. Introduction**
 
-This project is my submission for the Udacity course "Introduction to Rust". The idea came from the example of the Udacity task, where 2 players can play ping pong against each other.
+This project is my submission for the Udacity course "Introduction to Rust".
 
-The repo consists of a prepared C code with OpenGL dependency `starter` (renamed to `c_engine`) by the Udacity team. My contribution is the Rust library `rust_engine`, and the binary `pvp_game`. I used my local LLM to support with the requirement engineering without **ANY CONTRIBUTION IN THE CODING ITSELF**
+### **1.1. The Submission**
+
+The repo consists of a prepared C code with OpenGL dependency `starter` (renamed to `c_engine`) by the Udacity team. My contribution is the Rust library `rust_engine`, and the binary `rust_test_game` that applies `rust_engine` with Rust standard libraries for multithreading and Rust crate `reqwest` to wits its blocking Client API to perform the HTTP request and to block the current thread until the full response (or an error) arrives.
+
+### **1.2. Future Work**
+
+For future work, I will develop `pvp_game` which is essentially a ping pong for 2 players (the title of this repository Ping vs Pong) where player 1 controls its block movement with W (up) and S (down) and player 2 controls its block with UP arrow and DOWN arrow, on one keyboard for simplicity.
+
+### **1.3. Project Structure**
 
 The project structure:
+
 ```shell
 PVP
 ├── c_engine
@@ -226,3 +236,7 @@ Then follow the below guide for 5 main integration tests from both `Sprite` and 
     </tr>
   </tbody>
 </table>
+
+--- 
+
+NOTE: I used my local LLM to support with the requirement engineering without **ANY CONTRIBUTION IN THE CODING ITSELF**.
