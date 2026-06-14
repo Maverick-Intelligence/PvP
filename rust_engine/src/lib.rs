@@ -48,10 +48,10 @@ macro_rules! on_key_press {
 
 #[macro_export]
 macro_rules! change_sprite_color {
-    ($sprite:expr, $r:expr, $g:expr, $b:expr) => {{
+    ($sprite:expr, $r:expr, $g:expr, $b:expr) => {
         $sprite.set_color($r, $g, $b);
         $sprite.render();
-    }};
+    };
 }
 
 #[macro_export]
