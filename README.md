@@ -20,33 +20,43 @@ The project structure:
 ```shell
 PVP
 ├── c_engine
-│   ├── c_output
-│   │   ├── .gitkeep
-│   ├── c_test_game
-│   │   └── test_game.c
-│   ├── opengl_wrapper_lib
-│   │   ├── opengl_wrapper_lib.c
-│   │   └── opengl_wrapper_lib.h
-│   ├── LICENSE.txt
-│   ├── Makefile
-│   └── README.md
+│   ├── c_output
+│   │   ├── libopenglwrapper.so
+│   │   ├── opengl_wrapper_lib.o
+│   │   └── test_game_exe
+│   ├── c_test_game
+│   │   └── test_game.c
+│   ├── LICENSE.txt
+│   ├── Makefile
+│   ├── opengl_wrapper_lib
+│   │   ├── opengl_wrapper_lib.c
+│   │   └── opengl_wrapper_lib.h
+│   └── README.md
 ├── pvp_game
-│   ├── src
-│       └── main.rs
-│   └── Cargo.toml
+│   ├── Cargo.toml
+│   └── src
+│       └── main.rs
 ├── README.md
 ├── rust_engine
-│   ├── src
-│   │   ├── lib.rs
-│   │   ├── sprite.rs
-│   │   └── window.rs
-│   ├── tests
-│   │    ├── integration_test.rs
-│   │    └── unit_test.rs
-│   ├── build.rs
-│   └── Cargo.toml
-├── .gitignore
-└── README.md
+│   ├── build.rs
+│   ├── Cargo.lock
+│   ├── Cargo.toml
+│   ├── src
+│   │   ├── lib.rs
+│   │   ├── sprite.rs
+│   │   └── window.rs
+│   └── tests
+│       ├── integration_test.rs
+│       └── unit_test.rs
+└── rust_test_game
+    ├── Cargo.lock
+    ├── Cargo.toml
+    ├── README.md
+    └── src
+        ├── command.rs
+        ├── data.rs
+        ├── main.rs
+        └── networking.rs
 ```
 
 ## **2. Goals**
@@ -101,3 +111,118 @@ Then follow the below guide for 5 main integration tests from both `Sprite` and 
     * D
     * S
 * `test_sprite_position_update()` -> Popping up a window with a squared sprite going from up left to down right of the window. Tester can close the window after the sprite goes out of the window.
+
+## **4. Submission Checklist**
+
+<table>
+  <thead>
+    <tr>
+      <th>Delivery</th>
+      <th>Tasks</th>
+      <th>Description</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2">Proper setup and initial configuration</td>
+      <td>c_test_game runs successfully</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/c_engine/c_test_game/test_game.c">test_game.c</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>A library project for the game engine is created</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/src/lib.rs">lib.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td rowspan="4">Compilation and linking of the C library and implementation of FFI bindings</td>
+      <td>build.rs script is created and compiles the C library without errors</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/build.rs">build.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>extern block for C functions is created, referring to opengl_wrapper_lib/opengl_wrapper.h for the function signatures</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/src/window.rs">window.rs</a>, <a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/src/sprite.rs">sprite.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Rust functions calling the C functions are implemented</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/src/window.rs">window.rs</a>, <a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/src/sprite.rs">sprite.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Macro-annotated structs for the data types passed between the Rust and C code are created</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/src/sprite.rs">sprite.rs</a>, <a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/src/window.rs">window.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td rowspan="5">Implementation and verification of tests</td>
+      <td>test_simple_game_loop is implemented completely</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/tests/integration_test.rs">integration_test.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>test_sprite_rendering is implemented</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/tests/integration_test.rs">integration_test.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>test_screen_clearing is implemented</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/tests/integration_test.rs">integration_test.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>test_key_presses is implemented</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/tests/integration_test.rs">integration_test.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>test_sprite_position_update is implemented</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/tests/integration_test.rs">integration_test.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td rowspan="4">Creating Declarative Macros</td>
+      <td>start_window_and_game_loop! macro is implemented</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/src/lib.rs">lib.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>on_key_press! macro is implemented</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/src/lib.rs">lib.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>spawn_sprite! macro is implemented</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/src/lib.rs">lib.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>At least one additional macro is implemented</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_engine/src/lib.rs">lib.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td rowspan="4">Development of a simple game</td>
+      <td>A new binary project is created (e.g., rust_test_game)</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_test_game/src/main.rs">main.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Game loop and key press listeners are implemented</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_test_game/src/main.rs">main.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>HTTP request to fetch sprite data is correctly handled with multithreading</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_test_game/src/networking.rs">networking.rs</a>, <a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_test_game/src/main.rs">main.rs</a></td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Proper modularization, error handling, and code cleanliness are maintained</td>
+      <td><a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_test_game/src/main.rs">main.rs</a>, <a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_test_game/src/command.rs">command.rs</a>, <a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_test_game/src/data.rs">data.rs</a>, <a href="https://github.com/Maverick-Intelligence/PvP/blob/trunk/rust_test_game/src/networking.rs">networking.rs</a></td>
+      <td>✅</td>
+    </tr>
+  </tbody>
+</table>
