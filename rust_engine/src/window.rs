@@ -33,29 +33,29 @@ unsafe extern "C" {
     fn get_window() -> *const GLFWwindow;
 }
 
-pub fn create_pvp_window(title: String, width: u32, height: u32) {
+pub fn create_new_window(title: String, width: u32, height: u32) {
     let c_str = CString::new(title).expect("CString::new failed!");
     let title_as_c_ptr: *const c_char = c_str.as_ptr();
 
     unsafe { create_game_window(title_as_c_ptr, width, height) }
 }
 
-pub fn update_pvp_window() {
+pub fn update_window() {
     unsafe { update_game_window() }
 }
 
-pub fn clear_pvp_window_screen() {
+pub fn clear_window() {
     unsafe { clear_screen() }
 }
 
-pub fn close_pvp_window() -> u8 {
+pub fn close_window() -> u8 {
     unsafe { window_should_close() }
 }
 
-pub fn get_pvp_key(window: *const GLFWwindow, key: i32) -> i32 {
+pub fn listen_key(window: *const GLFWwindow, key: i32) -> i32 {
     unsafe { get_key(window, key) }
 }
 
-pub fn get_pvp_window() -> *const GLFWwindow {
+pub fn fetch_window() -> *const GLFWwindow {
     unsafe { get_window() }
 }
