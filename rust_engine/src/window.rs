@@ -1,6 +1,6 @@
 use std::ffi::CString;
 use std::marker::{PhantomData, PhantomPinned};
-use std::os::raw::{c_char, c_int};
+use std::os::raw::{c_char, c_int, c_uchar, c_uint};
 
 pub const GLFW_PRESS: c_int = 1;
 pub const GLFW_KEY_SPACE: c_int = 32;
@@ -20,19 +20,15 @@ pub struct GLFWwindow {
 }
 
 unsafe extern "C" {
-    fn create_game_window(
-        title: *const c_char,
-        width: std::os::raw::c_uint,
-        height: std::os::raw::c_uint,
-    );
+    fn create_game_window(title: *const c_char, width: c_uint, height: c_uint);
 
     fn update_game_window();
 
     fn clear_screen();
 
-    fn window_should_close() -> std::os::raw::c_uchar;
+    fn window_should_close() -> c_uchar;
 
-    fn get_key(window: *const GLFWwindow, key: std::os::raw::c_int) -> std::os::raw::c_int;
+    fn get_key(window: *const GLFWwindow, key: c_int) -> c_int;
 
     fn get_window() -> *const GLFWwindow;
 }
