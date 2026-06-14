@@ -13,7 +13,7 @@ macro_rules! spawn_sprite {
 #[macro_export]
 macro_rules! move_sprite {
     (clear, $sprite:expr, $x:expr, $y:expr) => {{
-        $crate::window::clear_pvp_window_screen();
+        $crate::window::clear_window();
         $sprite.update_position($x, $y);
         $sprite.render();
     }};
@@ -27,7 +27,7 @@ macro_rules! move_sprite {
 macro_rules! tick {
     ($ms:expr) => {
         let tmp_duration_in_ms = std::time::Duration::from_millis($ms);
-        $crate::window::update_pvp_window();
+        $crate::window::update_window();
         std::thread::sleep(tmp_duration_in_ms);
     };
 }
@@ -36,11 +36,11 @@ macro_rules! tick {
 macro_rules! on_key_press {
     ($( $key:expr => $action:expr ),+ $(,)?) => {
         $(
-            if $crate::window::get_pvp_key($crate::window::get_pvp_window(), $key)
+            if $crate::window::listen_key($crate::window::fetch_window(), $key)
                 == $crate::window::GLFW_PRESS
             {
                 $action;
-                $crate::window::update_pvp_window();
+                $crate::window::update_window();
             }
         )+
     };
@@ -57,16 +57,16 @@ macro_rules! change_sprite_color {
 #[macro_export]
 macro_rules! start_window_and_game_loop {
     ($title:expr, $w:expr, $h:expr, $($action:tt)*) => {{
-        $crate::window::create_pvp_window($title, $w, $h);
+        $crate::window::create_new_window($title, $w, $h);
 
         loop {
             $($action)*
 
-            if $crate::window::close_pvp_window() == 1 {
+            if $crate::window::close_window() == 1 {
                 break;
             }
             $crate::tick!(10);
-            $crate::window::clear_pvp_window_screen();
+            $crate::window::clear_window();
         }
     }};
 }

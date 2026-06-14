@@ -19,8 +19,6 @@ fn test_sprite_rendering() {
         600,
         sprite.render();
         rust_engine::tick!(10);
-        rust_engine::spawn_sprite!(0.0, 0.0, 80, 80, 255, 255, 255);
-        rust_engine::window::update_pvp_window();
     );
 
     assert_eq!(title.len(), 21);
@@ -42,7 +40,7 @@ fn test_screen_clearing() {
             0
         );
         rust_engine::tick!(2000);
-        rust_engine::window::clear_pvp_window_screen();
+        rust_engine::window::clear_window();
         rust_engine::change_sprite_color!(
             sprite,
             0,
