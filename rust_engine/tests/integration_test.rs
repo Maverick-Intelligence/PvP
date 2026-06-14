@@ -4,34 +4,23 @@ extern crate rust_engine;
 fn test_simple_game_loop() {
     let title = String::from("Test Simple Game Loop");
 
-<<<<<<< HEAD
     rust_engine::start_window_and_game_loop!(title, 800, 600, rust_engine::tick!(10););
-=======
-    rust_engine::start_window_and_game_loop!(title, 800, 600, rust_engine::window::update_pvp_window(););
-
->>>>>>> b73ce28 (refactor(integration-test): refactor test_sprite_rendering)
     assert_eq!(10, 10);
 }
 
 #[test]
 fn test_sprite_rendering() {
     let title = String::from("Test Sprite Rendering");
-<<<<<<< HEAD
     let sprite = rust_engine::spawn_sprite!(0.0, 0.0, 80, 80, 255, 255, 255);
-=======
->>>>>>> b73ce28 (refactor(integration-test): refactor test_sprite_rendering)
 
     rust_engine::start_window_and_game_loop!(
         title.clone(),
         800,
         600,
-<<<<<<< HEAD
         sprite.render();
         rust_engine::tick!(10);
-=======
         rust_engine::spawn_sprite!(0.0, 0.0, 80, 80, 255, 255, 255);
         rust_engine::window::update_pvp_window();
->>>>>>> b73ce28 (refactor(integration-test): refactor test_sprite_rendering)
     );
 
     assert_eq!(title.len(), 21);
